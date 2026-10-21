@@ -1,0 +1,35 @@
+{
+  "name": "is-nodd",
+  "version": "1.0.0",
+  "description": "Returns true if input number is 'n-odd'.",
+  "keywords": [
+    "nodd",
+    "is-nodd",
+    "number",
+    "modulo",
+    "divisible",
+    "divisibility",
+    "divisor",
+    "check",
+    "predicate",
+    "utility"
+  ],
+  "homepage": "https://github.com/davidramsay95/is-nodd#readme",
+  "bugs": {
+    "url": "https://github.com/davidramsay95/is-nodd/issues"
+  },
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidramsay95/is-nodd.git"
+  },
+  "license": "MIT",
+  "author": "David Ramsay",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test"
+  }
+}
