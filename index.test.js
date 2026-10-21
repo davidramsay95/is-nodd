@@ -48,15 +48,35 @@ test('returns true for non-integer values', () => {
   assert.equal(isNodd(3, 3.5), true);
 });
 
-test('returns true for NaN and Infinity values', () => {
-  assert.equal(isNodd(3, NaN), true);
-  assert.equal(isNodd(3, Infinity), true);
-  assert.equal(isNodd(3, -Infinity), true);
+test('throws a TypeError for NaN and Infinity values', () => {
+  assert.throws(() => isNodd(3, NaN), TypeError);
+  assert.throws(() => isNodd(3, Infinity), TypeError);
+  assert.throws(() => isNodd(3, -Infinity), TypeError);
 });
 
-test('returns true for a divisor of zero, because % yields NaN', () => {
-  assert.equal(isNodd(0, 5), true);
-  assert.equal(isNodd(0, 0), true);
+test('throws a TypeError for values beyond the safe integer range', () => {
+  assert.throws(() => isNodd(3, Number.MAX_SAFE_INTEGER + 1), TypeError);
+  assert.throws(() => isNodd(3, Number.MIN_SAFE_INTEGER - 1), TypeError);
+});
+
+test('throws a TypeError for a divisor of zero', () => {
+  assert.throws(() => isNodd(0, 5), TypeError);
+  assert.throws(() => isNodd(0, 0), TypeError);
+  assert.throws(() => isNodd(-0, 5), TypeError);
+});
+
+test('throws a TypeError for an unsafe divisor', () => {
+  assert.throws(() => isNodd(NaN, 5), TypeError);
+  assert.throws(() => isNodd(Infinity, 5), TypeError);
+  assert.throws(() => isNodd(Number.MAX_SAFE_INTEGER + 1, 5), TypeError);
+});
+
+test('throws a TypeError for non-number inputs', () => {
+  assert.throws(() => isNodd('3', 6), TypeError);
+  assert.throws(() => isNodd(3, '6'), TypeError);
+  assert.throws(() => isNodd(null, 6), TypeError);
+  assert.throws(() => isNodd(3, undefined), TypeError);
+  assert.throws(() => isNodd(), TypeError);
 });
 
 test('always returns a boolean', () => {
