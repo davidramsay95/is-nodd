@@ -28,16 +28,26 @@ isNodd(3, 0); // false
 
 `isNodd(divisor, value)` returns `value % divisor !== 0`. Zero is divisible by any non-zero divisor, so `isNodd(3, 0)` returns `false`.
 
-Inputs follow JavaScript `%` semantics:
+Inputs are validated with [`is-safe-number`](https://github.com/davidramsay95/is-safe-number). A `TypeError` is thrown if:
+
+- `value` is not a primitive number, is `NaN`, `Infinity` or `-Infinity`, or is outside the safe integer range.
+- `divisor` fails the same checks, or is `0`.
+
+Otherwise the result follows JavaScript `%` semantics:
 
 - Non-integer values such as `1.5` return `true`.
-- `NaN`, `Infinity` and `-Infinity` values return `true`, because `%` yields `NaN` for them and `NaN !== 0`.
-- A divisor of `0` returns `true`, because `value % 0` is `NaN`.
 - Negative values and negative divisors work as expected: `isNodd(3, -9)` and `isNodd(-3, 9)` both return `false`.
 
 ## Development
 
-Tests use the built-in Node.js test runner. No dependencies are required.
+Tests use the built-in Node.js test runner.
+
+`is-safe-number` must be resolvable from `node_modules`. Once it is published, `npm install` is enough. Until then, link the local sibling checkout without modifying `package.json`:
+
+```sh
+npm install --no-save --no-package-lock ../is-safe-number
+npm test
+```
 
 ```sh
 npm test
@@ -45,7 +55,7 @@ npm test
 
 ## Publishing
 
-Publish this package before `is-neven`, which declares it as a dependency (`^1.0.0`).
+Publish `is-safe-number` first, then this package, then `is-neven`. Each declares the previous one as a dependency (`^1.0.0`), so installing fails until it exists on the registry.
 
 Only `index.js`, `package.json`, `README.md` and `LICENSE` are included in the package tarball. Verify with:
 
